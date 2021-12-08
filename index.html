@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>P59 Parcial</title>
+    <title>P59 Integrador</title>
+    <script src="assets/js/jquery.js"></script>
     <link rel="stylesheet" href="assets/css/bootstrap.css">
     <link rel="stylesheet" href="assets/css/all.css">
     <link rel="shortcut icon" type="image/jpg" href="assets/img/favicon.ico"/>
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://rawgit.com/mholt/PapaParse/master/papaparse.js"></script>
+    
 </head>
 <body>
     <main>
@@ -17,7 +20,7 @@
             <header class="d-flex flex-wrap justify-content-end py-3 mb-4 border-bottom">   
                 <ul class="nav nav-pills">
                     <li>
-                        <a href="https://github.com/Sama3liz/Nacato_Coral" class="btn btn-secondary" target="_blank">
+                        <a href="https://github.com/Sama3liz/integrador" class="btn btn-secondary" target="_blank">
                             GitHub
                         </a>
                     </li>
@@ -27,21 +30,34 @@
         <!-- ./Header -->
         <!-- Content -->
         <div class="container">
-            <div>
-                <figure class="highcharts-figure">
-                    <div id="container"></div>
-                    <p class="highcharts-description">
-                        A basic column chart compares rainfall values between four cities.
-                        Tokyo has the overall highest amount of rainfall, followed by New York.
-                        The chart is making use of the axis crosshair feature, to highlight
-                        months as they are hovered over.
-                    </p>
-                </figure>
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="container" id="container1"></div>
+                    <div class="container" id="container2"></div>
+                    <div class="container" id="container3"></div>
+                </div>
+                <div class="col-md-2">
+                    <select id="select" class="form-select">
+                        <option value="Jan">January</option>
+                        <option value="Feb">February</option>
+                        <option value="Mar">March</option>
+                        <option value="Apr">April</option>
+                        <option value="May">May</option>
+                        <option value="Jun">June</option>
+                    </select>
+                </div>
             </div>
+        </div>
+        <div class="container">
+            <pre id="data">
+                Nick,1,2,3,9,12,33
+                Ann,5,6,7,4,23,8
+                Joe,7,8,9,2,21,14
+            </pre>
         </div>
         <!-- ./Content -->
     </main>
 </body>
-<script src="assets/js/table.js"></script>
 <script type='text/javascript' src="assets/js/bootstrap.bundle.js"></script>
+<script src="assets/js/app.js"></script>
 </html>
