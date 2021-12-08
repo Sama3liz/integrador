@@ -1,3 +1,10 @@
+
+$('.input-daterange').datepicker({
+
+  format: "dd/mm/yyyy"
+
+});
+
 var csv = Papa.parse(document.getElementById('data').innerHTML);
 
 Highcharts.chart('container1', {
@@ -15,39 +22,6 @@ Highcharts.chart('container1', {
     keys: ['name', 'y']
   }],
 });
-
-Highcharts.chart('container2', {
-  xAxis: {
-    type: 'category'
-  },
-  series: [{
-    type: 'pie',
-    name: 'People',
-    data: [
-      ['Nick', 35],
-      ['Ann', 45],
-      ['Joe', 29]
-    ],
-    keys: ['name', 'y']
-  }],
-});
-
-Highcharts.chart('container3', {
-  xAxis: {
-    type: 'category'
-  },
-  series: [{
-    type: 'line',
-    name: 'People',
-    data: [
-      ['Nick', 35],
-      ['Ann', 45],
-      ['Joe', 29]
-    ],
-    keys: ['name', 'y']
-  }],
-});
-
 
 var select = document.getElementById('select');
 
