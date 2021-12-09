@@ -1,0 +1,6 @@
+.fondo-blur{
+    background-image: url(../img/download.jpg);
+    background-size: 100% auto;
+    background-position: center top;
+    background-repeat: no-repeat;
+}
