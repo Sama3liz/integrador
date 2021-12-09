@@ -24,4 +24,3 @@ function downloadURI(uri, name) {
     document.body.removeChild(link);
     delete link;
 }
-
