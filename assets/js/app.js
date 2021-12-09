@@ -1,47 +1,76 @@
 
-$('.input-daterange').datepicker({
+function downloadtable() {
 
-  format: "dd/mm/yyyy"
+    var node = document.getElementById('tabledata');
 
-});
+    domtoimage.toPng(node)
+        .then(function (dataUrl) {
+            var img = new Image();
+            img.src = dataUrl;
+            downloadURI(dataUrl, "tabla.png")
+        })
+        .catch(function (error) {
+            console.error('Error', error);
+        });
 
-var csv = Papa.parse(document.getElementById('data').innerHTML);
+}
 
-Highcharts.chart('container1', {
-  xAxis: {
-    type: 'category'
-  },
-  series: [{
-    type: 'bar',
-    name: 'People',
-    data: [
-      ['Nick', 35],
-      ['Ann', 45],
-      ['Joe', 29]
-    ],
-    keys: ['name', 'y']
-  }],
-});
+function downloadURI(uri, name) {
+    var link = document.createElement("a");
+    link.download = name;
+    link.href = uri;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    delete link;
+}
 
-var select = document.getElementById('select');
 
-select.addEventListener('change', (e) => {
-  var month = e.target.value;
-  var monthsArr = Highcharts.defaultOptions.lang.shortMonths;
-  var monthIndex = monthsArr.indexOf(month) + 1;
-  var data = [];
+function exportxt(){
+    /* Get the HTML data using Element by Id */
+    var table = document.getElementById("tabledata");
 
-  for (var j = 0; j < csv.data.length; j++) {
-    data.push([
-      csv.data[j][0], +csv.data[j][monthIndex]
-    ]);
-  }
+    /* Declaring array variable */
+    var rows =[];
 
-  Highcharts.charts.forEach((chart) => {
-    chart.series[0].update({
-      data: data
-    }, false, false, false);
+    //iterate through rows of table
+    for(var i=0,row; row = table.rows[i];i++){
+        //rows would be accessed using the "row" variable assigned in the for loop
+        //Get each cell value/column from the row
+        column1 = row.cells[0].innerText;
+        column2 = row.cells[1].innerText;
+        column3 = row.cells[2].innerText;
+        column4 = row.cells[3].innerText;
+        column5 = row.cells[4].innerText;
+        column6 = row.cells[5].innerText;
 
-    chart.redraw();
-  });
-});
+        /* add a new records in the array */
+        rows.push(
+            [
+                column1,
+                column2,
+                column3,
+                column4,
+                column5,
+                column6
+            ]
+        );
+
+    }
+    csvContent = "data:text/csv;charset=utf-8,";
+    /* add the column delimiter as comma(,) and each row splitted by new line character (\n) */
+    rows.forEach(function(rowArray){
+        row = rowArray.join(",");
+        csvContent += row + "\r\n";
+    });
+
+    /* create a hidden <a> DOM node and set its download attribute */
+    var encodedUri = encodeURI(csvContent);
+    var link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "Tabla.txt");
+    document.body.appendChild(link);
+    /* download the data file named "Stock_Price_Report.csv" */
+    link.click();
+}
+
