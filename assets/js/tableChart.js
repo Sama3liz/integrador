@@ -4,7 +4,7 @@ $(document).ready(function () {
     var table = $('#tabledata').DataTable({
         searchPanes: {
             viewTotal: true,
-            columns: [2],
+            columns: [2,3],
             collapse: false
         },
         responsive: "true",
@@ -23,49 +23,51 @@ $(document).ready(function () {
 				className: 'btn btn-danger'
 			},
 			{
-				extend:    'print',
+				extend:    'csvHtml5',
 				text:      '<i class="fas fa-sticky-note"></i> ',
-				titleAttr: 'Imprimir',
+				titleAttr: 'Exportar a TXT',
 				className: 'btn btn-warning',
-                onclick: exportxt()
+                extension: '.txt'
 			},
             {
-				extend:    'pdf',
 				text:      '<i class="fas fa-image"></i> ',
-				titleAttr: 'Imprimir',
+				titleAttr: 'Exportar a PNG',
 				className: 'btn btn-primary',
-                onclick: downloadtable()
+                action: function(){
+                    downloadtable();
+                }
 			},
 		]	        
     });
- // Create the chart with initial data
+
+ /* Crear el grafico inicial con la data */
  var container = $('<div/>').insertBefore(table.table().container());
  
- var chart = Highcharts.chart(container[0], {
-     chart: {
-         type: 'pie',
-     },
-     title: {
-         text: 'Staff Count Per Position',
-     },
-     series: [
-         {
-             data: chartData(table),
-         },
-     ],
- });
+var chart = Highcharts.chart(container[0], {
+    chart: {
+        type: 'pie',
+    },
+    title: {
+        text: 'Empleados por ciudad',
+    },
+    series: [
+        {
+            data: chartData(table),
+        },
+    ],
+});
 
- // On each draw, update the data in the chart
- table.on('draw', function () {
-     chart.series[0].setData(chartData(table));
- });
+ /* Actualiza el grafico por cada vez que seleccione un filtro */
+table.on('draw', function () {
+    chart.series[0].setData(chartData(table));
+    });
 });
 
 function chartData(table) {
  var counts = {};
 
  // Count the number of entries for each position
- table
+    table
      .column(1, { search: 'applied' })
      .data()
      .each(function (val) {
@@ -74,13 +76,13 @@ function chartData(table) {
          } else {
              counts[val] = 1;
          }
-     });
+    });
 
- // And map it to the format highcharts uses
- return $.map(counts, function (val, key) {
-     return {
-         name: key,
-         y: val,
-     };
- });
+    // And map it to the format highcharts uses
+    return $.map(counts, function (val, key) {
+        return {
+            name: key,
+            y: val,
+        };
+    });
 }
